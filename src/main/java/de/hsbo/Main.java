@@ -12,8 +12,6 @@ public class Main {
     public static final int ERROR_EVENT_CODE = 1111;
 
     public static void main(String[] args) {
-        String[] arr1 = "Logger".split("#");
-        String[] arr2 = "Logger#1".split("#");
 
         ConnectedDeviceObserver<StringEvent> logger = new ConnectedDeviceObserver.DeviceBuilder<StringEvent>()
                 .name("Logger")
