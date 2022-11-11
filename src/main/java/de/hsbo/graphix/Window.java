@@ -1,29 +1,27 @@
 package de.hsbo.graphix;
 
 import de.hsbo.Main;
+import de.hsbo.observer.Codes;
 import de.hsbo.observer.MessagePumpObservable;
 import de.hsbo.observer.events.StringEvent;
-import org.lwjgl.Version;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.system.MemoryStack;
+import org.lwjgl.*;
+import org.lwjgl.glfw.*;
+import org.lwjgl.opengl.*;
+import org.lwjgl.system.*;
 
-import java.io.FileNotFoundException;
-import java.io.PrintStream;
-import java.nio.IntBuffer;
+import java.nio.*;
 
-import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
+import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengles.GLES20.*;
-import static org.lwjgl.system.MemoryStack.stackPush;
-import static org.lwjgl.system.MemoryUtil.NULL;
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.system.MemoryStack.*;
+import static org.lwjgl.system.MemoryUtil.*;
 
 public class Window {
     private long window; //window handle
 
     public void run() {
-        MessagePumpObservable.getInstance().addEventAndNotify(new StringEvent(Main.LOG_EVENT_CODE, ("Hello LWJGL-" + Version.getVersion() + "!")));
+        MessagePumpObservable.getInstance().addEventAndNotify(new StringEvent(Codes.getInstance().getByName("Logger#0"), ("Hello LWJGL-" + Version.getVersion() + "!")));
         //initialize OpenGL
         init();
         //game loop
@@ -83,13 +81,13 @@ public class Window {
         glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
             if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
                 glfwSetWindowShouldClose(window, true); // We will detect this in the rendering loop
+
         });
 
         // Get the thread stack and push a new frame
         try ( MemoryStack stack = stackPush() ) {
             IntBuffer pWidth = stack.mallocInt(1); // int*
             IntBuffer pHeight = stack.mallocInt(1); // int*
-
             // Get the window size passed to glfwCreateWindow
             glfwGetWindowSize(window, pWidth, pHeight);
 

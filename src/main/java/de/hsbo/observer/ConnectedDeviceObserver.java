@@ -49,7 +49,10 @@ public class ConnectedDeviceObserver<T extends BaseEvent> implements IObserver{
         }else {
             this.name = builder.name;
         }
-        MessagePumpObservable.getInstance().addEvent(new StringEvent(Main.LOG_EVENT_CODE, "Device [" + this.name + "] connected", this) );
+        for (int code = 0; code<codes.size(); code++) {
+            Codes.getInstance().addCode(this.name+"#"+code, codes.get(code));
+        }
+        MessagePumpObservable.getInstance().addEvent(new StringEvent(Codes.getInstance().getByName("Logger#0"), "Device [" + this.name + "] connected", this) );
     }
 
     public static class DeviceBuilder<T extends BaseEvent> {

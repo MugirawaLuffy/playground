@@ -1,5 +1,6 @@
 package de.hsbo;
 import de.hsbo.graphix.Window;
+import de.hsbo.observer.Codes;
 import de.hsbo.observer.ConnectedDeviceObserver;
 import de.hsbo.observer.MessagePumpObservable;
 import de.hsbo.observer.events.ConsoleColors;
@@ -9,12 +10,14 @@ import java.time.ZonedDateTime;
 
 public class Main {
     public static final int ERROR_EVENT_CODE = 1111;
-    public static final int LOG_EVENT_CODE = 1112;
 
     public static void main(String[] args) {
+        String[] arr1 = "Logger".split("#");
+        String[] arr2 = "Logger#1".split("#");
+
         ConnectedDeviceObserver<StringEvent> logger = new ConnectedDeviceObserver.DeviceBuilder<StringEvent>()
                 .name("Logger")
-                .addSingleCode(Main.LOG_EVENT_CODE)
+                .addSingleCode(1111)
                 .setOnSpokenTo(
                         event -> {
                             String buf = ConsoleColors.ANSI_BRIGHT_YELLOW + "[" + Timestamp.from(ZonedDateTime.now().toInstant()).toString() + "]";
@@ -26,7 +29,7 @@ public class Main {
                 )
                 .build();
         MessagePumpObservable.getInstance().addObserver(logger);
-        MessagePumpObservable.getInstance().addEventAndNotify(new StringEvent(LOG_EVENT_CODE, "Hallo Welt"));
+        MessagePumpObservable.getInstance().addEventAndNotify(new StringEvent(Codes.getInstance().getByName("Logger"), "Hallo Welt"));
 
         Window w = new Window();
         w.run();
