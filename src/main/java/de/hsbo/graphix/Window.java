@@ -11,6 +11,7 @@ import org.lwjgl.system.*;
 
 import java.nio.*;
 
+import static java.lang.Thread.sleep;
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
@@ -49,7 +50,13 @@ public class Window {
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
+        double secsPerFrame = 1.0d / 60.0d;
         while ( !glfwWindowShouldClose(window) ) {
+            //handle input
+
+            //update game state
+
+            //render
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
             glfwSwapBuffers(window); // swap the color buffers
             // Poll for window events. The key callback above will only be
